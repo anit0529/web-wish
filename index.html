@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes floatUp {
+            0% { opacity: 0; transform: translateY(50px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+        .floating-animation {
+            position: absolute;
+            animation: floatUp 3s linear infinite;
+        }
+        .glass-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-out {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        canvas {
+            border: 2px solid #ccc;
+            background: #fdf3f5;
+            display: block;
+            margin: auto;
+        }
+      .photo-tile {
+    filter: blur(5px);
+    transition: filter 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+     .photo-tile:hover {
+    filter: blur(0);
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+}
+      .body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+    </style>
+</head>
+<body class="min-h-screen w-full flex items-center justify-center bg-gradient-to-r from-pink-300 to-purple-400">
+    <div class="absolute top-4 right-4">
+        <button onclick="toggleMusic()" class="p-2 bg-white rounded-full shadow-lg hover:bg-gray-200 transition">
+    🎵
+</button>
+    </div>
+    
+    <div id="message-box" class="relative text-center text-white p-8 glass-box z-10">
+        <div class="text-3xl">✨</div>
+        <h1 class="text-3xl font-bold mt-2">Pranam motu don! ✨</h1>
+        <p class="text-lg">aaj mela motu 2 saal ka hogya🤭!</p>
+    </div>
+    
+    <div class="absolute w-full h-full top-0 left-0 pointer-events-none">
+        <div class="floating-animation text-4xl" style="top: 80%; left: 20%">🎁</div>
+        <div class="floating-animation text-4xl" style="top: 90%; left: 50%">❤️</div>
+        <div class="floating-animation text-4xl" style="top: 85%; left: 70%">🎁</div>
+        <div class="floating-animation text-4xl" style="top: 95%; left: 30%">❤️</div>
+    </div>
+
+    <script>
+        function changeMessage(text, nextFunction) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.classList.add('fade-out');
+            setTimeout(() => {
+                messageBox.innerHTML = `<div class="text-3xl">✨</div><h1 class="text-3xl font-bold mt-2">${text}</h1>`;
+                if (nextFunction) nextFunction();
+                messageBox.classList.remove('fade-out');
+            }, 800);
+        }
+
+        setTimeout(() => {
+            changeMessage("Maine aapke liye kuch bhout special bnaya hai...", () => {
+                setTimeout(() => {
+                    changeMessage("Before you begin, I want to say you are the best MA on this planet🌏...", () => {
+                        document.getElementById('message-box').innerHTML += `
+                            <div class="mt-4 flex justify-center gap-4">
+                                <button onclick="pageFour()" class="px-6 py-3 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition fade-in">Yes, please!</button>
+                                <button onclick="pageFour()" class="px-6 py-3 bg-purple-500 text-white rounded-full shadow-lg hover:bg-purple-600 transition fade-in">Show me!</button>
+                            </div>
+                        `;
+                    });
+                }, 3000);
+            });
+        }, 3000);
+
+        function pageFour() {
+            changeMessage("LESSSSS GOOOOOOOOO", () => {
+                setTimeout(() => {
+                    changeMessage("Now, a special message just for you...", () => {
+                        setTimeout(() => {
+                            document.getElementById('message-box').innerHTML += `
+                                <button onclick="pageFive()" class="px-6 py-3 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition fade-in">Next →</button>
+                            `;
+                        }, 2000);
+                    });
+                }, 2000);
+            });
+        }
+
+        function pageFive() {
+            changeMessage("I Love You mele golu molu kuchu puchu se balak🤗💖....", () => {
+                setTimeout(() => {
+                    document.getElementById('message-box').innerHTML += `
+                        <button onclick="goToCakeCeremony()" class="px-6 py-3 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition fade-in">Continue →</button>
+                    `;
+                }, 2000);
+            });
+        }
+
+          function goToCakeCeremony() {
+    document.body.innerHTML = `
+        <div class="text-center">
+            <h2 class="text-xl font-bold mb-4">🎂 Touch karke cake kaato chalo! 🎂</h2>
+            <canvas id="cakeCanvas" width="500" height="300"></canvas>
+            <button id="continueButton" class="px-6 py-3 bg-pink-500 text-white rounded-full shadow-lg hover:bg-pink-600 transition fade-in mt-4 hidden" onclick="goToMainContent()">Continue →</button>
+        </div>
+    `;
+
+    const canvas = document.getElementById('cakeCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = "#FFC0CB";
+    ctx.fillRect(100, 150, 300, 100);
+    ctx.fillStyle = "#FF69B4";
+    ctx.fillRect(100, 140, 300, 20);
+    
+    let cutting = false;
+    let clearedArea = 0;
+    const totalArea = 300 * 100;
+    const continueButton = document.getElementById("continueButton");
+
+    function cutCake(x, y) {
+        const sliceWidth = 50;
+        const sliceHeight = 100;
+        ctx.clearRect(x - 5, 150, sliceWidth, sliceHeight);
+        clearedArea += sliceWidth * sliceHeight;
+
+        if (clearedArea >= totalArea * 0.9) {
+            continueButton.classList.remove("hidden");
+            continueButton.style.display = "block"; // Ensures visibility
+        }
+    }
+
+    // Mouse events
+    canvas.addEventListener("mousedown", () => cutting = true);
+    canvas.addEventListener("mouseup", () => cutting = false);
+    canvas.addEventListener("mousemove", (event) => {
+        if (cutting) cutCake(event.offsetX, event.offsetY);
+    });
+
+    // Touch events for mobile/tablet support
+    canvas.addEventListener("touchstart", (event) => {
+        cutting = true;
+        event.preventDefault();
+    });
+
+    canvas.addEventListener("touchend", () => cutting = false);
+
+    canvas.addEventListener("touchmove", (event) => {
+        if (cutting) {
+            const touch = event.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            cutCake(x, y);
+        }
+        event.preventDefault();
+    });
+}
+
+
+        function goToMainContent() {
+    document.body.innerHTML = `
+        <div class="text-center p-8">
+            <h1 class="text-4xl font-bold mb-4">🎉 Happy Birthday mere motu! 🎉</h1>
+            <p class="text-lg">Happy Birthday, Ma! Today is all about celebrating the incredible person you are—the one who fills our lives with love, warmth, and endless care. Your kindness, strength, and wisdom inspire me every day, and I am beyond grateful for all the sacrifices you make and the love you pour into our family. May this special day bring you as much happiness and joy as you bring to everyone around you. Wishing you health, laughter, and all the beautiful moments your heart desires. Love you always!💖🎂</p>
+            <div class="mt-8 grid grid-cols-3 gap-4 place-items-center">
+            <img class="photo-tile w-80 h-80 object-cover rounded-lg shadow-lg" src="https://www.dropbox.com/scl/fi/q4fke9cyiw4j86f0jk5kq/IMG_3768.jpeg?rlkey=mn7u178xsmvfdhfoagk3wa8gl&st=xbiu65jd&raw=1">
+            <img class="photo-tile w-80 h-80 object-cover rounded-lg shadow-lg" src="https://www.dropbox.com/scl/fi/c3yjhiiz0jdo2l1jnjn52/IMG_2392.jpeg?rlkey=cchnslbadlm3l3gcgaaouexfq&st=qost9qdc&raw=1">
+            <img class="photo-tile w-80 h-80 object-cover rounded-lg shadow-lg" src="https://www.dropbox.com/scl/fi/1nk48gt1tbrymh7mzf7ts/IMG_3207.jpeg?rlkey=uywu3thful5c1gawot3nf5pry&st=2k85jhvn&raw=1">
+        </div>
+    `;
+}
+
+// Add this inside your <script> tag
+const audio = new Audio("https://www.dropbox.com/scl/fi/28l20ups3shob53a9lqe3/happy-birthday-254480.mp3?rlkey=e6nj1kbypm70hotgvt21zt73x&st=9bmvuk3e&raw=1");
+audio.loop = true; // Ensures the song keeps playing
+
+let isPlaying = false;
+
+function toggleMusic() {
+    if (isPlaying) {
+        audio.pause();
+    } else {
+        audio.play().catch(error => console.log("Playback error:", error));
+    }
+    isPlaying = !isPlaying;
+}
+
+    </script>
+</body>
+</html>
